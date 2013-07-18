@@ -1,0 +1,9 @@
+# Cache & Temp Files
+/Temp/*/*
+~*
+*.bak
+*.cmp
+*.old
+*.tmp
+*sublime*
+*.DS_*

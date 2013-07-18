@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<rdf:RDF
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:rk="http://rk/rdf/"
+>
+
+<rdf:Description rdf:about="1">
+  <rk:name>Ren Kan</rk:name>
+  <rk:extra rdf:parseType="Resource">
+  	<rk:weight>120</rk:weight>
+  	<rk:school>Zhe Jiang University</rk:school>
+  </rk:extra>
+  <rk:age>23</rk:age>
+</rdf:Description>
+
+<rdf:Description rdf:about="2">
+  <rk:name>Xie Jiaming</rk:name>
+  <rk:age>22</rk:age>
+</rdf:Description>
+
+<rdf:Description rdf:about="3">
+  <rk:name>Tian Yiding</rk:name>
+  <rk:age>22</rk:age>
+</rdf:Description>
+
+<rdf:Description rdf:about="4">
+  <rk:name>Zhu Chenhao</rk:name>
+  <rk:age>23</rk:age>
+</rdf:Description>
+
+</rdf:RDF>
