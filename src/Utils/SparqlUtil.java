@@ -23,7 +23,7 @@ public class SparqlUtil {
 									throws QueryEvaluationException, RepositoryException, 
 									MalformedQueryException {
 		//PREFIX
-		if(prefix != null) {
+		if(prefix != null) { 
 			query.append("PREFIX ");
 			for(int i=0; i<prefix.length/2; i++) {
 				query.append(prefix[2*i]);
