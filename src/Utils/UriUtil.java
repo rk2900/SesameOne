@@ -5,7 +5,7 @@ import java.net.URLEncoder;
 
 import org.openrdf.model.URI;
 import org.openrdf.model.ValueFactory;
-import org.openrdf.repository.RepositoryConnection;
+import org.openrdf.model.impl.ValueFactoryImpl;
 
 public class UriUtil {
 	private StringBuilder uriBuilder;
@@ -13,25 +13,28 @@ public class UriUtil {
 	
 	public UriUtil() {
 		uriBuilder = new StringBuilder();
+		valueFactory = new ValueFactoryImpl();
 	}
 	
 	public UriUtil(String namespace) {
 		uriBuilder = new StringBuilder(namespace);
+		valueFactory = new ValueFactoryImpl();
 	}
 	
 	public UriUtil(UriUtil u) {
 		uriBuilder = new StringBuilder(u.getNsAndType());
+		valueFactory = new ValueFactoryImpl();
 	}
 	
 	public void setValueFactory(ValueFactory vf) {
 		this.valueFactory = vf;
 	}
 	
-	public void setValueFactory(RepositoryConnection repoConn) {
-		this.valueFactory = repoConn.getValueFactory();
+	public void setNameSpace(String ns) {
+		this.uriBuilder = new StringBuilder(ns);
 	}
 	
-	public void typeAppender(String type) {
+	public void setType(String type) {
 		uriBuilder.append(type+'/');
 	}
 	

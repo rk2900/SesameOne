@@ -2,7 +2,7 @@ package Utils;
 
 import org.openrdf.model.Literal;
 import org.openrdf.model.ValueFactory;
-import org.openrdf.repository.RepositoryConnection;
+import org.openrdf.model.impl.ValueFactoryImpl;
 
 public class LiteralUtil {
 	private StringBuilder litBuilder;
@@ -10,23 +10,22 @@ public class LiteralUtil {
 	
 	public LiteralUtil() {
 		litBuilder = new StringBuilder();
+		valueFactory = new ValueFactoryImpl();
 	}
 	
 	public LiteralUtil(String namespace) {
 		litBuilder = new StringBuilder(namespace);
+		valueFactory = new ValueFactoryImpl();
 	}
 	
 	public LiteralUtil(LiteralUtil u) {
 		//TODO
 		litBuilder = new StringBuilder();
+		valueFactory = new ValueFactoryImpl();
 	}
 	
 	public void setValueFactory(ValueFactory vf) {
 		this.valueFactory = vf; 
-	}
-	
-	public void setValueFactory(RepositoryConnection repoConn) {
-		this.valueFactory = repoConn.getValueFactory();
 	}
 	
 	public Literal getLiteral(String str) {

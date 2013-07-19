@@ -40,6 +40,13 @@ public class Repo {
 		repoInitialize();
 	}
 	
+	public Repo(String repoPath) {
+		repoFile = new File(repoPath);
+		natStore = new NativeStore(repoFile);
+		repo = new SailRepository(natStore);
+		repoInitialize();
+	}
+	
 	private void repoInitialize() {
 		try {
 			repo.initialize();
@@ -119,7 +126,7 @@ public class Repo {
 				if(line.length() <= 0) {
 					continue;
 				}
-				segments = line.split(" ");
+				segments = line.split("\t");
 				subjStr = segments[0];
 				predStr = segments[1];
 				objStr = segments[2];
