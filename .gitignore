@@ -1,4 +1,5 @@
 # Cache & Temp Files
+*repo/*
 *bin/*
 /Temp/*/*
 ~*
