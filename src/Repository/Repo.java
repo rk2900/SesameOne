@@ -55,6 +55,15 @@ public class Repo {
 		}
 	}
 
+	public RepositoryConnection getConnection() {
+		try {
+			return repo.getConnection();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
 	/*
 	 * The URI-URI-URI format SPO record.
 	 */
@@ -170,6 +179,10 @@ public class Repo {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void saveRDFTurtle() {
+		//TODO 
 	}
 	
 }
