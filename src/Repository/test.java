@@ -1,6 +1,8 @@
 package Repository;
 
 import org.openrdf.rio.RDFFormat;
+
+import Utils.UriUtil;
 import Const.Const;
 
 public class test {
@@ -16,6 +18,9 @@ public class test {
 		r.addRecord(Const.rdfPath, baseURI, RDFFormat.RDFXML);
 		r.addRecord(NS+"subj", NS+"pred", NS+"obj");
 		r.addRecord(Const.streamRDFPath);
+		
+		UriUtil u = new UriUtil();
+		System.out.print(u.isUri("http://fat/"));
 		
 //		String query = "PREFIX test: <http://test.com/>" +
 //				"SELECT ?s WHERE {?s test:age ?o.}";		

@@ -13,4 +13,5 @@ public class Const {
 	 */
 	public final static int 	RDFXML 			= 	1;
 	public final static int 	RDFTURTLE 		= 	2;
+	
 }
