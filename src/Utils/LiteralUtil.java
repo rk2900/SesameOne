@@ -33,6 +33,13 @@ public class LiteralUtil {
 		return valueFactory.createLiteral(str);
 	}
 	
+	/*
+	 * To set the Literal with language label.
+	 * if languageEnable is true,
+	 * it will split the object value with symbol '@'
+	 * and return the literal with language label.
+	 * else it will return raw literal.
+	 */
 	public Literal getLiteral(String str, boolean langEnable) {
 		if(langEnable) {
 			String[] strSeq = str.split("@");
