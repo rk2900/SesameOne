@@ -1,7 +1,6 @@
 package Repository;
 
 import org.openrdf.rio.RDFFormat;
-
 import Utils.UriUtil;
 import Const.Const;
 
@@ -11,7 +10,7 @@ public class test {
 	 */
 	public static void main(String[] args) {
 		Repo r = new Repo();
-
+		
 		String NS = "http://test.com/";
 		String baseURI = "http://rk/";
 		
