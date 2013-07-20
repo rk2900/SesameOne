@@ -24,6 +24,11 @@ import org.openrdf.rio.RDFWriter;
 import org.openrdf.rio.Rio;
 import org.openrdf.sail.nativerdf.NativeStore;
 
+import Utils.LiteralUtil;
+import Utils.PredicateUtil;
+import Utils.SubjectUtil;
+import Utils.UriUtil;
+
 import Const.Const;
 
 public class Repo {
@@ -32,11 +37,19 @@ public class Repo {
 	private NativeStore natStore;
 	private File repoFile;
 	private RepositoryConnection repoConn;
+	private SubjectUtil subjUtil;
+	private PredicateUtil predUtil;
+	private LiteralUtil litUtil;
+	private UriUtil uriUtil;
 	
 	public Repo() {
 		repoFile = new File(Const.repoPath);
 		natStore = new NativeStore(repoFile);
 		repo = new SailRepository(natStore);
+		subjUtil = new SubjectUtil();
+		predUtil = new PredicateUtil();
+		litUtil = new LiteralUtil();
+		uriUtil = new UriUtil();
 		repoInitialize();
 	}
 	
@@ -44,6 +57,10 @@ public class Repo {
 		repoFile = new File(repoPath);
 		natStore = new NativeStore(repoFile);
 		repo = new SailRepository(natStore);
+		subjUtil = new SubjectUtil();
+		predUtil = new PredicateUtil();
+		litUtil = new LiteralUtil();
+		uriUtil = new UriUtil();
 		repoInitialize();
 	}
 	
@@ -59,11 +76,41 @@ public class Repo {
 		try {
 			return repo.getConnection();
 		} catch (RepositoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
 	}
+	
+	/*
+	 * To set the subject namespace
+	 * and type.
+	 */
+	public void setSubjNsAndType(String ns, String type) {
+		subjUtil.setNameSpace(ns);
+		subjUtil.setType(type);
+	}
+	
+	/*
+	 * To set the predicate namespace
+	 * and type.
+	 */
+	public void setPredNsAndType(String ns, String type) {
+		predUtil.setNameSpace(ns);
+		predUtil.setType(type);
+	}
+	
+//	public SubjectUtil getSubjUtil() {
+//		return subjUtil;
+//	}
+//	
+//	public PredicateUtil getPredUtil() {
+//		return predUtil;
+//	}
+//	
+//	public LiteralUtil getLiteralUtil() {
+//		return litUtil;
+//	}
+	
 	/*
 	 * The URI-URI-URI format SPO record.
 	 */
@@ -81,11 +128,27 @@ public class Repo {
 	 * The Str-Str-Str format SPO record.
 	 */
 	public void addRecord(String subjStr, String predStr, String objStr) {
-		ValueFactory vf = repo.getValueFactory();
-		URI subj = vf.createURI(subjStr);
-		URI pred = vf.createURI(predStr);
-		Literal obj = vf.createLiteral(objStr);
-		addRecord(subj,pred,obj);
+		URI subj;
+		URI pred;
+		URI objUri;
+		Literal objLit;
+		try {
+			repoConn = repo.getConnection();
+			subj = subjUtil.getSubjUri(subjStr);
+			pred = predUtil.getPredUri(predStr);
+			if(predUtil.isObjUri(predStr)) {
+				objUri = litUtil.getUriObject(objStr);
+				objLit = null;
+				repoConn.add(subj,pred,objUri);
+			} else {
+				objUri = null;
+				objLit = litUtil.getLiteral(objStr);
+				repoConn.add(subj, pred,objLit);
+			}
+			repoConn.close();
+		} catch (RepositoryException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/*
@@ -181,6 +244,10 @@ public class Repo {
 		
 	}
 	
+	/*
+	 * To save the triples in RDF turtle format
+	 * directly from the Sesame database. 
+	 */
 	public void saveRDFTurtle() {
 		//TODO 
 	}

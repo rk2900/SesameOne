@@ -55,6 +55,10 @@ public class UriUtil {
 		return rtn;
 	}
 	
+	public URI getUri(URI uri) {
+		return valueFactory.createURI(uri.toString());
+	}
+	
 	/*
 	 * To get the URI of the specific string value
 	 * 1. if it is already a URI, then return;

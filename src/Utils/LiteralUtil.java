@@ -1,6 +1,7 @@
 package Utils;
 
 import org.openrdf.model.Literal;
+import org.openrdf.model.URI;
 import org.openrdf.model.ValueFactory;
 import org.openrdf.model.impl.ValueFactoryImpl;
 
@@ -49,6 +50,10 @@ public class LiteralUtil {
 		} else {
 			return valueFactory.createLiteral(str);
 		}
+	}
+	
+	public URI getUriObject(String objStr) {
+		return valueFactory.createURI(objStr);
 	}
 
 }
