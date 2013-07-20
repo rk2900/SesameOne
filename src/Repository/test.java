@@ -1,16 +1,32 @@
 package Repository;
 
+import java.awt.List;
+import java.util.ArrayList;
+
+import org.openrdf.model.URI;
 import org.openrdf.rio.RDFFormat;
+
+import Utils.LiteralUtil;
+import Utils.PredicateUtil;
 import Utils.UriUtil;
 import Const.Const;
 
 public class test {
+//	private URI uri;
 	/**
 	 * @Author RenKan
 	 */
 	public static void main(String[] args) {
 		Repo r = new Repo();
-		
+		ArrayList<URI> uriList = new ArrayList<URI>();
+		UriUtil uriUtil = new UriUtil();
+		PredicateUtil predUtil = new PredicateUtil();
+		LiteralUtil litUtil = new LiteralUtil();
+//		URI uri1 = u.getUri("http://rk/test");
+//		System.out.println(uri1);
+		uriList.add(uriUtil.getUri("http://test.com/relation/friend"));
+		uriList.add(uriUtil.getUri("http://test.com/relation/post"));
+
 		String NS = "http://test.com/";
 		String baseURI = "http://rk/";
 		
@@ -18,8 +34,11 @@ public class test {
 		r.addRecord(NS+"subj", NS+"pred", NS+"obj");
 		r.addRecord(Const.streamRDFPath);
 		
-		UriUtil u = new UriUtil();
-		System.out.print(u.isUri("http://fat/"));
+		if(uriList.contains(uriUtil.getUri("http://test.com/relation/firend"))) {
+			
+		}
+		
+		System.out.print(uriUtil.isUri("http://fat/"));
 		
 //		String query = "PREFIX test: <http://test.com/>" +
 //				"SELECT ?s WHERE {?s test:age ?o.}";		
