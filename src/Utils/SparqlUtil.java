@@ -7,13 +7,12 @@ import org.openrdf.query.TupleQueryResult;
 import org.openrdf.repository.RepositoryConnection;
 import org.openrdf.repository.RepositoryException;
 
-import Repository.Repo;
 
 public class SparqlUtil {
 	private RepositoryConnection repoConn;
 	private StringBuilder query;
 	
-	public SparqlUtil(Repo repo) {
+	public SparqlUtil(RepoUtil repo) {
 		repoConn = repo.getConnection();
 		query = new StringBuilder();
 	}

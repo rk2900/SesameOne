@@ -7,6 +7,7 @@ import org.openrdf.rio.RDFFormat;
 
 import Utils.ObjectUtil;
 import Utils.PredicateUtil;
+import Utils.RepoUtil;
 import Utils.UriUtil;
 import Const.Const;
 
@@ -16,7 +17,7 @@ public class test {
 	 * @Author RenKan
 	 */
 	public static void main(String[] args) {
-		Repo r = new Repo();
+		RepoUtil r = new RepoUtil();
 		ArrayList<URI> uriList = new ArrayList<URI>();
 		UriUtil uriUtil = new UriUtil();
 		PredicateUtil predUtil = new PredicateUtil();

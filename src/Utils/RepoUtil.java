@@ -1,4 +1,4 @@
-package Repository;
+package Utils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,13 +24,10 @@ import org.openrdf.rio.RDFWriter;
 import org.openrdf.rio.Rio;
 import org.openrdf.sail.nativerdf.NativeStore;
 
-import Utils.ObjectUtil;
-import Utils.PredicateUtil;
-import Utils.SubjectUtil;
 
 import Const.Const;
 
-public class Repo {
+public class RepoUtil {
 	private Repository repo;
 //	private MemoryStore memStore;
 	private NativeStore natStore;
@@ -40,7 +37,7 @@ public class Repo {
 	private PredicateUtil predUtil;
 	private ObjectUtil objUtil;
 	
-	public Repo() {
+	public RepoUtil() {
 		repoFile = new File(Const.repoPath);
 		natStore = new NativeStore(repoFile);
 		repo = new SailRepository(natStore);
@@ -50,7 +47,7 @@ public class Repo {
 		repoInitialize();
 	}
 	
-	public Repo(String repoPath) {
+	public RepoUtil(String repoPath) {
 		repoFile = new File(repoPath);
 		natStore = new NativeStore(repoFile);
 		repo = new SailRepository(natStore);
