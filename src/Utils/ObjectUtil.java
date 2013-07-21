@@ -19,23 +19,15 @@ public class ObjectUtil extends UriUtil {
 	}
 	
 	public void setValueFactory(ValueFactory vf) {
-		this.valueFactory = vf; 
+		super.valueFactory = vf; 
 	}
 	
 	public Literal getLiteral(String str) {
 		return valueFactory.createLiteral(str);
 	}
 	
+	//TODO
 	public Literal getLiteral(String str, boolean langEnable) {
-//		switch(type) {
-//		case litType.PURE:
-//			return valueFactory.createLiteral(str);
-//		case litType.LANG:
-//			String[] strSeq = str.split("@");
-//			return valueFactory.createLiteral(strSeq[0],strSeq[1]);
-//		case litType.URI:
-//			
-//		}
 		if(langEnable) {
 			String[] strSeq = str.split("@");
 			return valueFactory.createLiteral(strSeq[0],strSeq[1]);
@@ -44,8 +36,8 @@ public class ObjectUtil extends UriUtil {
 		}
 	}
 	
-	public URI getUriObject(String objStr) {
-		return valueFactory.createURI(objStr);
+	public URI getObjUri(String objStr) {
+		return super.getUri(objStr);
 	}
 
 }

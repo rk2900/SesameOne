@@ -1,12 +1,11 @@
 package Repository;
 
-import java.awt.List;
 import java.util.ArrayList;
 
 import org.openrdf.model.URI;
 import org.openrdf.rio.RDFFormat;
 
-import Utils.LiteralUtil;
+import Utils.ObjectUtil;
 import Utils.PredicateUtil;
 import Utils.UriUtil;
 import Const.Const;
@@ -21,7 +20,7 @@ public class test {
 		ArrayList<URI> uriList = new ArrayList<URI>();
 		UriUtil uriUtil = new UriUtil();
 		PredicateUtil predUtil = new PredicateUtil();
-		LiteralUtil litUtil = new LiteralUtil();
+		ObjectUtil litUtil = new ObjectUtil();
 //		URI uri1 = u.getUri("http://rk/test");
 //		System.out.println(uri1);
 		uriList.add(uriUtil.getUri("http://test.com/relation/friend"));
@@ -30,9 +29,9 @@ public class test {
 		String NS = "http://test.com/";
 		String baseURI = "http://rk/";
 		
-		r.addRecord(Const.rdfPath, baseURI, RDFFormat.RDFXML);
+		r.addRecords(Const.rdfPath, baseURI, RDFFormat.RDFXML);
 		r.addRecord(NS+"subj", NS+"pred", NS+"obj");
-		r.addRecord(Const.streamRDFPath);
+		r.addRecords(Const.streamRDFPath);
 		
 		if(uriList.contains(uriUtil.getUri("http://test.com/relation/firend"))) {
 			

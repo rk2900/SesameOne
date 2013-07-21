@@ -8,9 +8,9 @@ import org.openrdf.model.ValueFactory;
 import org.openrdf.model.impl.ValueFactoryImpl;
 
 public class UriUtil {
-	private StringBuilder namespace;
-	private StringBuilder uriBuilder;
-	private ValueFactory valueFactory;
+	protected StringBuilder namespace;
+	protected StringBuilder uriBuilder;
+	protected ValueFactory valueFactory;
 	
 	public UriUtil() {
 		namespace = new StringBuilder();

@@ -24,10 +24,9 @@ import org.openrdf.rio.RDFWriter;
 import org.openrdf.rio.Rio;
 import org.openrdf.sail.nativerdf.NativeStore;
 
-import Utils.LiteralUtil;
+import Utils.ObjectUtil;
 import Utils.PredicateUtil;
 import Utils.SubjectUtil;
-import Utils.UriUtil;
 
 import Const.Const;
 
@@ -39,8 +38,7 @@ public class Repo {
 	private RepositoryConnection repoConn;
 	private SubjectUtil subjUtil;
 	private PredicateUtil predUtil;
-	private LiteralUtil litUtil;
-	private UriUtil uriUtil;
+	private ObjectUtil objUtil;
 	
 	public Repo() {
 		repoFile = new File(Const.repoPath);
@@ -48,8 +46,7 @@ public class Repo {
 		repo = new SailRepository(natStore);
 		subjUtil = new SubjectUtil();
 		predUtil = new PredicateUtil();
-		litUtil = new LiteralUtil();
-		uriUtil = new UriUtil();
+		objUtil = new ObjectUtil();
 		repoInitialize();
 	}
 	
@@ -59,8 +56,7 @@ public class Repo {
 		repo = new SailRepository(natStore);
 		subjUtil = new SubjectUtil();
 		predUtil = new PredicateUtil();
-		litUtil = new LiteralUtil();
-		uriUtil = new UriUtil();
+		objUtil = new ObjectUtil();
 		repoInitialize();
 	}
 	
@@ -99,20 +95,17 @@ public class Repo {
 		predUtil.setType(type);
 	}
 	
-//	public SubjectUtil getSubjUtil() {
-//		return subjUtil;
-//	}
-//	
-//	public PredicateUtil getPredUtil() {
-//		return predUtil;
-//	}
-//	
-//	public LiteralUtil getLiteralUtil() {
-//		return litUtil;
-//	}
+	/*
+	 * To set the object namespace
+	 * and type.
+	 */
+	public void setObjNsAndType(String ns, String type) {
+		objUtil.setNameSpace(ns);
+		objUtil.setType(type);
+	}
 	
 	/*
-	 * The URI-URI-URI format SPO record.
+	 * The URI-URI-Literal format SPO record.
 	 */
 	public void addRecord(URI subj, URI pred, Literal obj) {
 		try {
@@ -122,6 +115,19 @@ public class Repo {
 		} catch (RepositoryException e) {
 			e.printStackTrace();
 		} 
+	}
+	
+	/*
+	 * The URI-URI-URI format SPO record.
+	 */
+	public void addRecord(URI subj, URI pred, URI obj) {
+		try {
+			repoConn = repo.getConnection();
+			repoConn.add(subj, pred, obj);
+			repoConn.close();
+		} catch (RepositoryException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/*
@@ -137,12 +143,12 @@ public class Repo {
 			subj = subjUtil.getUri(subjStr);
 			pred = predUtil.getPredUri(predStr);
 			if(predUtil.isObjUri(predStr)) {
-				objUri = litUtil.getUriObject(objStr);
+				objUri = objUtil.getObjUri(objStr);
 				objLit = null;
 				repoConn.add(subj,pred,objUri);
 			} else {
 				objUri = null;
-				objLit = litUtil.getLiteral(objStr);
+				objLit = objUtil.getLiteral(objStr);
 				repoConn.add(subj, pred,objLit);
 			}
 			repoConn.close();
@@ -155,7 +161,7 @@ public class Repo {
 	 * The RDF reader for insert records
 	 * with stream reader.
 	 */
-	public void addRecord(String rdfPath, String baseURI, RDFFormat format) {
+	public void addRecords(String rdfPath, String baseURI, RDFFormat format) {
 		File rdfFile = new File(rdfPath);
 		BufferedReader reader;
 		try {
@@ -177,7 +183,7 @@ public class Repo {
 	/*
 	 * Read the RDF file with SPO format in stream.
 	 */
-	public void addRecord(String spoFilePath) {
+	public void addRecords(String spoFilePath) {
 //		File spoFile = new File(spoFilePath);
 		InputStream in = null;
 		try {
@@ -203,6 +209,7 @@ public class Repo {
 				if(line.length() <= 0) {
 					continue;
 				}
+				//TODO
 				segments = line.split("\t");
 				subjStr = segments[0];
 				predStr = segments[1];
