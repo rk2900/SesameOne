@@ -134,7 +134,7 @@ public class Repo {
 		Literal objLit;
 		try {
 			repoConn = repo.getConnection();
-			subj = subjUtil.getSubjUri(subjStr);
+			subj = subjUtil.getUri(subjStr);
 			pred = predUtil.getPredUri(predStr);
 			if(predUtil.isObjUri(predStr)) {
 				objUri = litUtil.getUriObject(objStr);
@@ -152,14 +152,19 @@ public class Repo {
 	}
 	
 	/*
-	 * The RDF reader for insert records.
+	 * The RDF reader for insert records
+	 * with stream reader.
 	 */
 	public void addRecord(String rdfPath, String baseURI, RDFFormat format) {
 		File rdfFile = new File(rdfPath);
+		BufferedReader reader;
 		try {
+			reader = new BufferedReader(new InputStreamReader(new FileInputStream(rdfFile)));
 			repoConn = repo.getConnection();
-			repoConn.add(rdfFile, baseURI, format);
+			repoConn.add(reader, baseURI, format);
 			repoConn.close();
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
 		} catch (RepositoryException e) {
 			e.printStackTrace();
 		} catch (RDFParseException e) {

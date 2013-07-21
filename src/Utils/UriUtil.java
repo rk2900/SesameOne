@@ -8,20 +8,24 @@ import org.openrdf.model.ValueFactory;
 import org.openrdf.model.impl.ValueFactoryImpl;
 
 public class UriUtil {
+	private StringBuilder namespace;
 	private StringBuilder uriBuilder;
 	private ValueFactory valueFactory;
 	
 	public UriUtil() {
+		namespace = new StringBuilder();
 		uriBuilder = new StringBuilder();
 		valueFactory = new ValueFactoryImpl();
 	}
 	
-	public UriUtil(String namespace) {
-		uriBuilder = new StringBuilder(namespace);
+	public UriUtil(String ns) {
+		namespace = new StringBuilder(ns);
+		uriBuilder = new StringBuilder();
 		valueFactory = new ValueFactoryImpl();
 	}
 	
 	public UriUtil(UriUtil u) {
+		namespace = new StringBuilder();
 		uriBuilder = new StringBuilder(u.getNsAndType());
 		valueFactory = new ValueFactoryImpl();
 	}
@@ -31,10 +35,11 @@ public class UriUtil {
 	}
 	
 	public void setNameSpace(String ns) {
-		this.uriBuilder = new StringBuilder(ns);
+		this.namespace = new StringBuilder(ns);
 	}
 	
 	public void setType(String type) {
+		uriBuilder = new StringBuilder(namespace.toString());
 		uriBuilder.append(type+'/');
 	}
 	
@@ -43,10 +48,26 @@ public class UriUtil {
 	 * ex:
 	 * namespace: http://test.org/
 	 * type: person{null}
-	 * result: http://test.org/person
+	 * result: http://test.org/person{null}
 	 */
 	public String getNsAndType() {
 		return uriBuilder.toString();
+	}
+	
+	public String getNameSpace() {
+		return namespace.toString();
+	}
+	
+	public URI getUri(String type, String iden) {
+		uriBuilder = new StringBuilder(namespace.toString());
+		uriBuilder = namespace.append(type);
+		try {
+			uriBuilder.append(URLEncoder.encode(iden,"utf-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return valueFactory.createURI(uriBuilder.toString());
+		
 	}
 	
 	public URI getUri() {

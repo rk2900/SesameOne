@@ -5,24 +5,16 @@ import org.openrdf.model.URI;
 import org.openrdf.model.ValueFactory;
 import org.openrdf.model.impl.ValueFactoryImpl;
 
-public class LiteralUtil {
-//	public static enum litType{PURE, LANG, URI};
-//	private StringBuilder litBuilder;
+public class ObjectUtil extends UriUtil {
 	private ValueFactory valueFactory;
 	
-	public LiteralUtil() {
-//		litBuilder = new StringBuilder();
+	public ObjectUtil() {
+		super();
 		valueFactory = new ValueFactoryImpl();
 	}
 	
-	public LiteralUtil(String namespace) {
-//		litBuilder = new StringBuilder(namespace);
-		valueFactory = new ValueFactoryImpl();
-	}
-	
-	public LiteralUtil(LiteralUtil u) {
-		//TODO
-//		litBuilder = new StringBuilder();
+	public ObjectUtil(String namespace) {
+		super(namespace);
 		valueFactory = new ValueFactoryImpl();
 	}
 	

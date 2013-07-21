@@ -6,24 +6,15 @@ import java.util.HashMap;
 import org.openrdf.model.URI;
 import org.openrdf.model.vocabulary.RDFS;
 
-public class PredicateUtil {
+public class PredicateUtil extends UriUtil {
 	private HashMap<String,URI> defaultUri;
-	private UriUtil uriUtil;
 	private ArrayList<String> propertyPred;
 	
 	public PredicateUtil() {
+		super();
 		defaultUri = new HashMap<String,URI>();
 		propertyPred = new ArrayList<String>();
-		uriUtil = new UriUtil();
 		initialize();
-	}
-	
-	public void setNameSpace(String ns) {
-		uriUtil.setNameSpace(ns);
-	}
-	
-	public void setType(String type) {
-		uriUtil.setType(type);
 	}
 	
 	/*
@@ -34,7 +25,7 @@ public class PredicateUtil {
 		//TODO
 		defaultUri.put("LEBAL", RDFS.LABEL);
 		defaultUri.put("DATATYPE", RDFS.DATATYPE);
-		
+		//TODO
 		propertyPred.add("NAME");
 		propertyPred.add("AGE");
 	}
@@ -44,8 +35,12 @@ public class PredicateUtil {
 	 */
 	public void insertDefaultUri(String key, URI uri) {
 		String uriKey = new String(key.toUpperCase());
-		URI defUri = uriUtil.getUri(uri);
+		URI defUri = super.getUri(uri);
 		defaultUri.put(uriKey, defUri);
+	}
+	
+	public void insertPropertyPred(URI uri) {
+		propertyPred.add(uri.toString());
 	}
 	
 	public URI getPredUri(String predStr) {
@@ -53,10 +48,13 @@ public class PredicateUtil {
 			predStr = predStr.substring(4);
 			return defaultUri.get(predStr);
 		} else {
-			return uriUtil.getUri(predStr);
+			return super.getUri(predStr);
 		}
 	}
 	
+	/*
+	 * To judge if the object should be an URI.
+	 */
 	public boolean isObjUri(String predStr) {
 		return propertyPred.contains(predStr);
 	}

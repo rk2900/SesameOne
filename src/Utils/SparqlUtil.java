@@ -60,19 +60,12 @@ public class SparqlUtil {
 	}
 	
 	
-	public static String Query(String[] PREFIX,
-            String[] Args,
-			String[] ANDargs,
-			String[] ORargs,
-			String[] OPTIONAL,
-			String RANarg,
-			String ran1,
-			String ran2,
-			String EXISTarg,
-			String EXIST,
-			String ORDERBY,
-			String LIMIT)
-	{
+	public TupleQueryResult Query(String[] PREFIX,
+			            String[] Args,
+						String[] ANDargs, String[] ORargs, String[] OPTIONAL,
+						String RANarg, String ran1, String ran2,
+						String EXISTarg, String EXIST,
+						String ORDERBY,	String LIMIT) throws QueryEvaluationException, RepositoryException, MalformedQueryException {
 		StringBuilder RESULT = new StringBuilder();
 
 		if (PREFIX != null) {
@@ -141,25 +134,20 @@ public class SparqlUtil {
 			RESULT.append("LIMIT " + LIMIT + " ");//最多输出多少条
 		}
 
-		return RESULT.toString();
+//		return RESULT.toString();
+		return repoConn.prepareTupleQuery(QueryLanguage.SPARQL, RESULT.toString()).evaluate();
 	}
 
 
 
-	public static String Query(String[] PREFIX,
-            String[] Args,
-			String[] ANDargs,
-			String[] ORargs,
-			String[] OPTIONAL,
-			String RANarg,
-			String ran1,
-			String ran2,
-			String EXISTarg,
-			String EXIST,
-			String ORDERBY,
-			String LIMIT,
-			String Language)
-	{
+	public TupleQueryResult Query(String[] PREFIX,
+		            String[] Args, String[] ANDargs,
+					String[] ORargs, String[] OPTIONAL,
+					String RANarg, String ran1, String ran2,
+					String EXISTarg, String EXIST,
+					String ORDERBY,	String LIMIT,
+					String Language) throws QueryEvaluationException, RepositoryException, MalformedQueryException {
+		
 		StringBuilder RESULT = new StringBuilder();
 
 		if (PREFIX != null) {
@@ -228,7 +216,8 @@ public class SparqlUtil {
 			RESULT.append("LIMIT " + LIMIT + " ");//最多输出多少条
 		}
 
-		return RESULT.toString();
+//		return RESULT.toString();
+		return repoConn.prepareTupleQuery(QueryLanguage.SPARQL, RESULT.toString()).evaluate();
 	}
 
 	
